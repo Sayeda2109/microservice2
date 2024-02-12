@@ -1,0 +1,143 @@
+openapi: 3.0.0
+info:
+    title: MobCo CF Architecture Service
+    description: |-
+                  APIs for Architecture Service
+                  
+                  These APIs describe how The Common Framework's architecture service can be accessed. These services would be used for validating, updating and generating artefacts from architecture repos. 
+                  
+
+                    Addressing Classic Autosar
+
+                    Addressing Adaptive Autosar
+                    
+                   - [Detailed Description can be found here](https://wonderful-mushroom-0eb8b6b10.4.azurestaticapps.net/common-framework/0.1/services/arch/contents.html)
+
+    version: 0.0.1
+servers:
+    - url: www.commonframework.bosch.com/api/
+tags:
+  - name: Validation
+    description: Validate your architecture models
+    externalDocs:
+      description: Find out more
+      url: http://swagger.io
+  - name: Extraction
+    description: APIs for generating EcuExtract other related tools
+    externalDocs:
+      description: Find out more
+      url: http://swagger.io
+  - name: Delta Update
+    description: Update your architecture models
+    externalDocs:
+      description: Find out more
+      url: http://swagger.io
+paths:
+  /validateSchema/{projectrepoPath}:
+    get:
+      tags:
+        - Validation
+      summary: Validate an existing autosar schema in the project path
+      description: Validate an existing autosar schema in the project path
+      operationId: validateSchema
+      parameters:
+        - name: projectrepoPath
+          in: path
+          description: Repo path of architecture models
+          required: true
+          schema:
+            type: string
+            format: string
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid repopath supplied
+        '404':
+          description: Not found
+  /validateArchitecture/{projectrepoPath}:
+    get:
+      tags:
+        - Validation
+      summary: Validate an existing autosar system architecture
+      description: Validate an existing autosar system architecture
+      operationId: validateArch
+      parameters:
+        - name: projectrepoPath
+          in: path
+          description: Repo path of architecture models
+          required: true
+          schema:
+            type: string
+            format: string
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid repopath supplied
+        '404':
+          description: Not found
+  /extract/{projectrepoPath}:
+    post:
+      tags:
+        - Extraction
+      summary: Extract Ecu arch from system extract
+      description: Extract Ecu related arch from system extract
+      operationId: extract
+      parameters:
+        - name: projectrepoPath
+          in: path
+          description: Repo path of architecture models
+          required: true
+          schema:
+            type: string
+            format: string
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid repopath supplied
+        '404':
+          description: Order not found
+  /systemextract/{projectrepoPath}:
+     post:
+      tags:
+        - Extraction
+      operationId: systemExtractor
+      summary: "Generates System Extract of a System Description"
+      parameters:
+        - name: projectrepoPath
+          in: path
+          schema:
+            type: string
+            format: uuid
+          required: true
+      responses:
+        200:
+          description: Execution status of the job.
+        400:
+          description: "Bad request"
+        500:
+          description: "Internal error"
+  /deltaupdate/{projectrepoPath}:
+    get:
+      tags:
+          - Delta Update
+      summary: Update architecture models
+      description: Update architecture models via model update mechanism
+      operationId: deltaupdate
+      parameters:
+          - name: projectrepoPath
+            in: path
+            description: Repo path of architecture models
+            required: true
+            schema:
+              type: string
+              format: string
+      responses:
+          '200':
+            description: successful operation
+          '400':
+            description: Invalid repopath supplied
+          '404':
+            description: Order not found
